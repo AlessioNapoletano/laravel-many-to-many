@@ -27,7 +27,7 @@ class Project extends Model
     }
 
     //Relationship method
-    public function tenchologies(){
+    public function technologies(){
         return $this->belongsToMany(Techology::class);
     }
 }
