@@ -26,7 +26,8 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        return view('admin.technologies.create');
+        $technology = new Technology();
+        return view('admin.technologies.create', compact('technology'));
     }
 
     /**
@@ -43,12 +44,12 @@ class TechnologyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Technology $technology
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', compact('technology'));
     }
 
     /**
