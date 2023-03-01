@@ -17,6 +17,23 @@
             @enderror  
         </div>
 
+        <div class="mb-3 tags d-flex align-items-center justify-content-between">
+            @foreach ($technologies as $technology)
+                    <div class="single-tag d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{ $technology->id }}"
+    
+                        @if ($errors->any())
+                            @checked(in_array($technology->id, old('technologies',[])))
+                        @else
+                            @checked($project->technologies->contains($technology->id))
+                        @endif
+                        >
+    
+                        <label class="form-check-label ms-2">{{ $technology->name }}</label>
+                    </div>
+            @endforeach
+        </div>
+
         <div class="mb-3">
             <label for="post_date" class="form-label">Data di pubblicazione</label>
             <input type="date" class="form-control @error('post_date') is-invalid @enderror" id="post_date" name="post_date" 
