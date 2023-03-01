@@ -28,7 +28,7 @@
                 <tr>
                     <td>{{ $technology->id }}</td>
                     <td>{{ $technology->name }}</td>
-                    <td>{{ $technology->bg_color }}</td>
+                    <td style="background-color: {{ $technology->bg_color }};">{{ $technology->bg_color }}</td>
                     <td>
                         <a href="{{ route('admin.technologies.show', $technology->slug) }}" class="btn btn-primary">
                             <i class="fa-solid fa-eye "></i>
