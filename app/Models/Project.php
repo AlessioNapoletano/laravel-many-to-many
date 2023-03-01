@@ -21,8 +21,14 @@ class Project extends Model
         return filter_var($this->cover_image, FILTER_VALIDATE_URL);
     }
 
+    //Relationship method
     public function type() {
         return $this->belongsTo(Type::class);
+    }
+
+    //Relationship method
+    public function tenchologies(){
+        return $this->belongsToMany(Techology::class);
     }
 }
 
