@@ -60,6 +60,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ (Route::currentRouteName() == 'admin.technologies.index') ? 'fw-bold' : ''  }}" href="{{ route('admin.technologies.index') }}">{{ __('Technologies') }}</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ (Route::currentRouteName() == 'about-me') ? 'fw-bold' : ''  }}" href="{{ route('about-me') }}">{{ __('About Me') }}</a>
                         </li>
 
