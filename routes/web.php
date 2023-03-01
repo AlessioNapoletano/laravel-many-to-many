@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController as DashboardController;
-use App\Http\Controllers\Admin\PostController as AdminPostController;
+
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\TechnologyController as AdminTechnologyController;
+
+
 use App\Http\Controllers\Guest\AboutMeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController as WelcomeController;
@@ -33,6 +36,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/projects/{project}/restore', [AdminProjectController::class, 'restore'])->name('restore-project')->withTrashed();
     Route::post('/restore-all', [AdminProjectController::class, 'restoreAll'])->name('restore-all-projects');
     Route::delete('/projects/{project}/force-delete', [AdminProjectController::class, 'forceDelete'])->name('force-delete-project')->withTrashed();
+
+    Route::resource('technologies', AdminTechnologyController::class);
     Route::resource('projects', AdminProjectController::class);
 });
 
