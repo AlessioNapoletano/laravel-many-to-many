@@ -30,6 +30,21 @@
                                 
                             </h5>
     
+                            <!--Tecnologie utilizzate nel progetto-->
+                            <p class="card-text text-center">
+                                <span class="fw-bold">
+                                    Tecnologie utilizzate: 
+                                </span>
+                                
+                                @foreach ($project->technologies as $tecnology)
+                                <span class="text-light fw-bold p-2 me-1 rounded-2" 
+                                style="background-color: {{ $tecnology->bg_color }};">
+                                    {{ $tecnology->name }}
+                                </span>
+                                @endforeach
+                                
+                            </p>
+
                             <!--Data di creazione del progetto-->
                             <p class="card-text text-center">
                                 <span class="fw-bold">
