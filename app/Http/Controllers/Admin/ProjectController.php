@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project as Project;
+use App\Models\Technology;
+use App\Models\Type;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Str as Str;
 use Illuminate\Support\Facades\Storage as Storage;
 use Illuminate\Support\Facades\DB;
-use App\Models\Type;
+
 
 
 class ProjectController extends Controller
@@ -26,7 +28,8 @@ class ProjectController extends Controller
          'content' => ['required', 'string', 'min:2'],
          'post_date' => ['required'],
          'cover_image' =>['required'],
-         'type_id' => ['required']
+         'type_id' => ['required'],
+         'technologies' => ['array']
       ];
 
       /**
@@ -47,7 +50,9 @@ class ProjectController extends Controller
 
          'cover_image.required' => 'E\' necessario inserire il path dell\'immagine cover del progetto',
 
-         'type_id.required' => 'E\' necessario inserire il tipo del progetto inserito'
+         'type_id.required' => 'E\' necessario inserire il tipo del progetto inserito',
+
+         'technologies.required' => 'E\' necessario inserire la/e tecnologie utilizzate nel progetto'
 
         ];
 
@@ -69,8 +74,9 @@ class ProjectController extends Controller
      */
     public function create(Project $project)
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.projects.create', compact('project' , 'types'));
+        return view('admin.projects.create', compact('project' , 'technologies', 'types'));
     }
 
 
@@ -91,6 +97,7 @@ class ProjectController extends Controller
         $newProject = new Project();
         $newProject->fill($dataValidate);
         $newProject->save();
+        $newProject->technologies()->sync($dataValidate['technologies']);
 
         return redirect()->route('admin.projects.index')->with('message', "Il post $newProject->title è stato creato con successo")->with('message-class', 'success');
     }
@@ -114,8 +121,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'technologies', 'types'));
     }
 
     /**
@@ -147,6 +155,7 @@ class ProjectController extends Controller
         $dataValidate['author'] = Auth::user()->name;
         $dataValidate['slug'] = Str::slug($dataValidate['title']);
         $project->update($dataValidate);
+        $project->technologies()->sync($dataValidate['technologies']);
         
         return redirect()->route('admin.projects.show', $project->slug)->with('message', "il progetto '$project->title' è stato modificato con successo")->with('message-class', 'success');
     }
@@ -163,6 +172,7 @@ class ProjectController extends Controller
             Storage::delete($project->cover_image);
         }
 
+        $project->technologies()->sync([]);
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('message', "il progetto '$project->title' è stato spostato nel cestino")->with('message-class', 'danger');
