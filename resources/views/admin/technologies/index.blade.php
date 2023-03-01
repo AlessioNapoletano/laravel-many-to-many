@@ -27,9 +27,8 @@
                 @foreach ($technologies as $technology)
                 <tr>
                     <td>{{ $technology->id }}</td>
-                    <td>{{ $technology->title }}</td>
-                    <td>{{ $technology->author }}</td>
-                    <td>{{ $technology->post_date }}</td>
+                    <td>{{ $technology->name }}</td>
+                    <td>{{ $technology->bg_color }}</td>
                     <td>
                         <a href="{{ route('admin.technologies.show', $technology->slug) }}" class="btn btn-primary">
                             <i class="fa-solid fa-eye "></i>
